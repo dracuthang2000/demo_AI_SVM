@@ -1,4 +1,4 @@
-package Config;
+package com.pthttt.Phone_AI.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
