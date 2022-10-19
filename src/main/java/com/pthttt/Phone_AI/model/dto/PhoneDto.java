@@ -39,4 +39,5 @@ public class PhoneDto {
     private String binaryImage;
     @NotBlank
     private String image;
+    private String data;
 }

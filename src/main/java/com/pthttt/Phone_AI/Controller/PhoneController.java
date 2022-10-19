@@ -81,7 +81,6 @@ public class PhoneController extends AbstractApplicationController {
             }
             Phone phone = mapper.phoneDtoToPhone(dto);
             phone.setLabel(RenderLabel.renderLabel(dto));
-            System.out.println(phone.getLabel());
         return new ResponseEntity<>(
                phoneService.save(phone),
                 HttpStatus.OK

@@ -41,15 +41,17 @@ text_clf.fit(X_train, y_train)
 
 
 # data = [{10 ,  94,    4,  460,  256}]
-df1 = pd.DataFrame({"brand":[sys.argv[2]],
-                    "CPU":[sys.argv[3]],
-                   "RAM":[sys.argv[4]],
-                   "ppi":[sys.argv[5]],
-                   "rom":[sys.argv[6]],
+brand = sys.argv[2]
+cpu = sys.argv[3]
+ram = sys.argv[4]
+ppi = sys.argv[5]
+rom = sys.argv[6]
+df1 = pd.DataFrame({"brand":[float(brand)],
+                    "CPU":[float(cpu)],
+                   "RAM":[float(ram)],
+                   "ppi":[float(ppi)],
+                   "rom":[float(rom)],
                    })
-
-
-
 
 predict = text_clf.predict(df1)
 print(predict[0])
