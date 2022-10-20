@@ -32,7 +32,7 @@ X_train = df.iloc[:,1:6].values
 y_train = df.iloc[:,6].values
 # In[394]:
 # In[395]:
-text_clf = SVC(kernel='rbf',random_state=1)
+text_clf = SVC(kernel='rbf',random_state=1, C=1)
 text_clf.fit(X_train, y_train)
 # predict class form test data
 
