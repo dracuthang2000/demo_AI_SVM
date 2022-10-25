@@ -38,7 +38,7 @@ public class RenderLabel {
                 data = "DataTest.sav";
             }
             ProcessBuilder builder = new ProcessBuilder("python",
-                    "D:\\PTIT_MTT\\PTUDTT\\Phone_AI\\src\\main\\resources\\python\\loadfile.py"
+                    "D:\\PTIT_MTT\\PTUDTT\\Phone_AI\\src\\main\\resources\\python\\LoadFile.py"
             ,data,brand.toString(),
                     cpu.toString(),ram.toString(),
                     ppi.toString(),rom.toString());
