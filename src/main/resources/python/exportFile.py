@@ -24,7 +24,7 @@ def parse(s):
 
 X_train = df.iloc[:, 1:6].values
 y_train = df.iloc[:, 6].values
-model = SVC(kernel='rbf', random_state=1, C=1)
+model = SVC(kernel='poly', random_state=1, C=1)
 model.fit(X_train, y_train)
 filename = 'Data(0-1).sav'
 pickle.dump(model, open(filename, 'wb'))
