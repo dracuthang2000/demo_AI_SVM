@@ -31,6 +31,6 @@ public class PhoneServiceImp implements PhoneService {
 
     @Override
     public List<Phone> findPhoneByLabel(String label) {
-        return phoneRepository.findByLabel(label);
+        return phoneRepository.findByLabelOrderByPrice(label);
     }
 }

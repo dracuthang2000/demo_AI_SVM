@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface PhoneRepository extends JpaRepository<Phone, Long>, QuerydslPredicateExecutor<Phone> {
-    List<Phone> findByLabel(String label);
+    List<Phone> findByLabelOrderByPrice(String label);
 }
