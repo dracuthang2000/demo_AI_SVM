@@ -10,9 +10,9 @@ import { AnyNsRecord } from 'dns';
 
 const ProductScreen = (props: any) => {
     const option = [
-        { value: "C", label: "Bình dân" },
+        { value: "A", label: "Bình dân" },
         { value: "B", label: "Tầm trung" },
-        { value: "A", label: "Cao cấp" }];
+        { value: "C", label: "Cao cấp" }];
     const navigate = useNavigate();
     const [products, setProducts] = useState([] as any);
     const [filter, setFilter] = useState('');
@@ -41,26 +41,31 @@ const ProductScreen = (props: any) => {
         }
     }, [loading]);
     const handleClickFilter = () => {
-        Axios.get(`phone/findPhoneByLabel`, {
-            params: {
-                filter: filter
-            }
-        }).then(res => {
-            const listProduct = res.data;
-            setProducts(
-                listProduct.map((p: any) => {
-                    return {
-                        id: p.id,
-                        img: p.image,
-                        product_name: p.name,
-                        price: p.price,
-                        label: p.label
-                    };
-                })
-            );
-        }).catch(e => {
-            console.log(e);
-        })
+        if (filter === "") {
+            setLoading(true);
+        } else {
+            Axios.get(`phone/findPhoneByLabel`, {
+                params: {
+                    filter: filter
+                }
+            }).then(res => {
+                const listProduct = res.data;
+                setProducts(
+                    listProduct.map((p: any) => {
+                        return {
+                            id: p.id,
+                            img: p.image,
+                            product_name: p.name,
+                            price: p.price,
+                            label: p.label
+                        };
+                    })
+                );
+            }).catch(e => {
+                console.log(e);
+            })
+        }
+
     }
     const handleClickReset = () => {
         setLoading(true);

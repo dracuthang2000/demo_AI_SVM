@@ -49,9 +49,11 @@ const CreateProduct = () => {
         dataTrain: false
     }
     const option = [{
-        value: 1, label: 'Data1'
+        value: "DataBigNum", label: 'Data(Big num)'
     }, {
-        value: 2, label: 'Data2'
+        value: "Data(0-1)", label: 'Data(0-1)'
+    }, {
+        value: "DataTest", label: 'Data(test)'
     }]
     const navigate = useNavigate();
     const [error, setError] = useState(initialError);
@@ -82,7 +84,7 @@ const CreateProduct = () => {
         let errorMessage = {} as any;
         let error1 = initialError;
         if (product.name === null || product.name === undefined || product.name === '') {
-            errorMessage.name = 'Name is not null';
+            errorMessage.name = 'Name is require';
             error1.name = true;
             flag = true;
         } else {
@@ -90,14 +92,14 @@ const CreateProduct = () => {
         }
 
         if (product?.brand === undefined || product?.brand === null) {
-            errorMessage.brand = 'Brand is not null';
+            errorMessage.brand = 'Brand is require';
             error1.brand = true;
             flag = true;
         } else {
             error1.brand = false;
         }
         if (product?.cpu === undefined || product?.cpu === null) {
-            errorMessage.cpu = 'CPU is not null';
+            errorMessage.cpu = 'CPU is require';
             error1.cpu = true;
             flag = true;
         } else {
@@ -105,15 +107,32 @@ const CreateProduct = () => {
         }
 
         if (product.ram === undefined || product.ram === null || product.ram === '') {
-            errorMessage.ram = 'Ram is not null';
+            errorMessage.ram = 'Ram is require';
             error1.ram = true;
             flag = true;
-        } else {
+        } else if (product.ram >= 18) {
+            errorMessage.ram = 'Ram less than 18';
+            error1.ram = true;
+            flag = true;
+        } else if (product.ram <= 0) {
+            errorMessage.ram = 'Ram bigger than 0';
+            error1.ram = true;
+            flag = true;
+        }
+        else {
             error1.ram = false;
         }
 
         if (product.rom === undefined || product.rom === null || product.rom === '') {
-            errorMessage.rom = 'Rom is not null';
+            errorMessage.rom = 'Rom is require';
+            error1.rom = true;
+            flag = true;
+        } else if (product.rom > 1024) {
+            errorMessage.rom = 'Rom less than 1024';
+            error1.rom = true;
+            flag = true;
+        } else if (product.rom <= 0) {
+            errorMessage.rom = 'Rom bigger than 0';
             error1.rom = true;
             flag = true;
         } else {
@@ -121,7 +140,11 @@ const CreateProduct = () => {
         }
 
         if (product.widescreen === undefined || product.widescreen === null || product.widescreen === '') {
-            errorMessage.widescreen = 'Widescreen is not null';
+            errorMessage.widescreen = 'Widescreen is require';
+            error1.widescreen = true;
+            flag = true;
+        } else if (product.widescreen <= 0) {
+            errorMessage.widescreen = 'Widescreen bigger 0';
             error1.widescreen = true;
             flag = true;
         } else {
@@ -129,14 +152,22 @@ const CreateProduct = () => {
         }
 
         if (product.resolution1 === undefined || product.resolution1 === null || product.resolution1 === '') {
-            errorMessage.resolution1 = 'Resolution1 is not null';
+            errorMessage.resolution1 = 'Resolution1 is require';
+            error1.resolution1 = true;
+            flag = true;
+        } else if (product.resolution1 <= 0) {
+            errorMessage.resolution1 = 'Resolution1 bigger 0';
             error1.resolution1 = true;
             flag = true;
         } else {
             error1.resolution1 = false;
         }
         if (product.resolution2 === undefined || product.resolution2 === null || product.resolution2 === '') {
-            errorMessage.resolution2 = 'Resolution2 is not null';
+            errorMessage.resolution2 = 'Resolution2 is require';
+            error1.resolution2 = true;
+            flag = true;
+        } else if (product.resolution2 <= 0) {
+            errorMessage.resolution2 = 'Resolution2 bigger 0';
             error1.resolution2 = true;
             flag = true;
         } else {
@@ -144,7 +175,7 @@ const CreateProduct = () => {
         }
 
         if (product.price === undefined || product.price === 0 || product.price === null || product.price === '') {
-            errorMessage.price = 'Price is not null';
+            errorMessage.price = 'Price is require';
             error1.price = true;
             flag = true;
         } else if (product.price < 0) {
@@ -156,12 +187,13 @@ const CreateProduct = () => {
         }
 
         if (product.image === undefined || product.image === null || product.image === '') {
-            errorMessage.image = 'Image is not null';
+            errorMessage.image = 'Image is require';
             error1.image = true;
             flag = true;
         } else {
             error1.image = false;
         }
+
         if (dataTrain === undefined || dataTrain === null || dataTrain === '') {
             errorMessage.dataTrain = 'Please choose data train';
             error1.dataTrain = true;
@@ -238,7 +270,13 @@ const CreateProduct = () => {
     const handleChange = (e: any) => {
         const name = e.target.name;
         const value = e.target.value;
-        setProduct({ ...product, [name]: value });
+        if (name === 'name') {
+            setProduct({ ...product, [name]: value });
+        } else {
+            if (!isNaN(value)) {
+                setProduct({ ...product, [name]: value });
+            }
+        }
     }
     return (
         <div className="container">
@@ -310,7 +348,7 @@ const CreateProduct = () => {
                                 name="ram"
                                 value={`${product.ram ? product.ram : ''}`}
                                 onChange={handleChange}
-                                label={'Ram *'}
+                                label={'Ram(max 18gb) *'}
                                 type={'text'}
                                 error={error.ram}
                             />
@@ -323,7 +361,7 @@ const CreateProduct = () => {
                                 name="rom"
                                 value={`${product.rom ? product.rom : ''}`}
                                 onChange={handleChange}
-                                label={'Rom *'}
+                                label={'Rom(max 1024gb) *'}
                                 type={'text'}
                                 error={error.rom}
                             />
@@ -340,7 +378,7 @@ const CreateProduct = () => {
                                             value={`${product.resolution1 ? product.resolution1 : ''}`}
                                             onChange={handleChange}
                                             label={'Resolution1 *'}
-                                            type={'number'}
+                                            type={'text'}
                                             error={error.resolution1}
                                         />
                                         {error.resolution1 && <FormControl error variant="standard">
@@ -356,7 +394,7 @@ const CreateProduct = () => {
                                             value={`${product.resolution2 ? product.resolution2 : ''}`}
                                             onChange={handleChange}
                                             label={'Resolution2 *'}
-                                            type={'number'}
+                                            type={'text'}
                                             error={error.resolution2}
                                         />
                                         {error.resolution2 && <FormControl error variant="standard">
@@ -372,7 +410,7 @@ const CreateProduct = () => {
                                 value={`${product.widescreen ? product.widescreen : ''}`}
                                 onChange={handleChange}
                                 label={'Widescreen (inch) *'}
-                                type={'number'}
+                                type={'text'}
                                 error={error.widescreen}
                             />
                             {error.widescreen && <FormControl error variant="standard">
@@ -383,10 +421,10 @@ const CreateProduct = () => {
                         <div className="container-input">
                             <TextField
                                 name="price"
-                                value={`${product.price}`}
+                                value={`${product.price ? product.price : ""}`}
                                 onChange={handleChange}
                                 label={'Price *'}
-                                type={'number'}
+                                type={'text'}
                                 error={error.price}
                             />
                             {error.price && <FormControl error variant="standard">
@@ -403,7 +441,10 @@ const CreateProduct = () => {
                                     value={dataTrain}
                                     error={error.dataTrain}
                                     label="Choose data train"
-                                    onChange={(e) => setDataTrain(e.target.value)}
+                                    onChange={(e) => {
+                                        setDataTrain(e.target.value);
+                                        setProduct({ ...product, data: e.target.value });
+                                    }}
                                 >
                                     <MenuItem value="">
                                         <em>None</em>
@@ -419,7 +460,7 @@ const CreateProduct = () => {
                     <div className="right">
                         <div className="imageContainer">
                             <div className="image">
-                                {<img style={{ borderColor: `${error.image && 'red'}` }} src={img ? img : require('../../image/frame.png')} />}
+                                {<img style={{ borderColor: `${error.image ? 'red' : "black"}` }} src={img ? img : require('../../image/frame.png')} />}
                             </div>
                             {error.image && <FormControl error variant="standard">
                                 <FormHelperText id="component-error-text">{messageError.image}</FormHelperText>

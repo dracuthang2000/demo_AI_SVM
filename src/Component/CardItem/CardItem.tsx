@@ -19,7 +19,7 @@ const Card = (props: any) => {
     const [shoppingCart, setShoppingCart] = useState<Partial<cart>>({})
     const [openDialogCart, setOpenDialogCart] = useState(false);
     return (
-        <div className="card-item" title={props.product_name}>
+        <div className="card-item" title={props.item.product_name}>
             <img src={`http://localhost:8081/api/phone/image/load/${props.item.img}`} className="card__img" />
             <div className="card__body">
                 <div className="card__title" >
@@ -29,7 +29,7 @@ const Card = (props: any) => {
                     <div className="card__price">{new Intl.NumberFormat().format(props.item.price)}</div>
                 </div>
                 <div className="discount-notify">
-                    <span>{props.item.label === "A" ? "Cao cấp" : props.item.label === "B" ? "Tầm Trung" : "Bình Dân"}</span>
+                    <span>{props.item.label === "C" ? "Cao cấp" : props.item.label === "B" ? "Tầm Trung" : "Bình Dân"}</span>
                 </div>
             </div>
         </div>
